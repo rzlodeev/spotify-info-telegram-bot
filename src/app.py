@@ -58,7 +58,10 @@ def name_or_link(message):
     if 'spotify.com' in message.text:
         get_playlist_by_link(message)
     else:
-        find_playlist(message)
+        title = message.text
+        results_message = bot.send_message(message.chat.id, f'Searching for {title}...',
+                                           reply_to_message_id=message.message_id)
+        find_playlist(results_message, title)  # Edit results_message and replace content with search results for title
 
 
 def get_playlist_by_link(message):
@@ -77,12 +80,10 @@ def get_playlist_by_link(message):
         bot.send_message(message.chat.id, str(response_status))
 
 
-# Gets user text as title parameter, makes request to spotify server and sends message with list of results
-def find_playlist(message, page=0):
-    title = message.text
-    if page == 0:
-        bot.send_message(message.chat.id, f'Searching for {title}...')
-
+# Makes request to spotify server with title, organizes response and sends message with list of results
+def find_playlist(message, title='', page=0):
+    if not title:
+        title = message.reply_to_message.text
     # Request to spotify server to search endpoint
     search_limit = 5
     response = requests.get('https://api.spotify.com/v1/search',
@@ -130,6 +131,7 @@ def find_playlist(message, page=0):
         reply_markup = types.InlineKeyboardMarkup(row_width=2)
         prev_button = types.InlineKeyboardButton('◀️Prev', callback_data=f'prev_page_{page}')
         next_button = types.InlineKeyboardButton('Next▶️', callback_data=f'next_page_{page}')
+        reply_markup.add(types.InlineKeyboardButton(f'Page: {page + 1}', callback_data='current_page'))
         if response['playlists']['previous'] is not None:  # Adding next\prev buttons
             if response['playlists']['next'] is not None:  # according to their existence
                 reply_markup.add(prev_button, next_button)
@@ -157,7 +159,7 @@ def find_playlist(message, page=0):
         # Breaks text up in several parts if it's longer than 4096 letters
         # Edit message command template with different txt to send
         def edit_long_message_text(txt):
-            return bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id + 1,
+            return bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id,
                                          text=f'{txt}', parse_mode='HTML',
                                          disable_web_page_preview=True, reply_markup=reply_markup)
 
@@ -185,10 +187,10 @@ def callback_query(call):
     if 'page' in call.data:
         # Previous page in search results
         if call.data.startswith('prev'):
-            find_playlist(call.message, int(call.data[-1]) - 1)
+            find_playlist(call.message, page=int(call.data[-1]) - 1)
         # Next page in search results
         if call.data.startswith('next'):
-            find_playlist(call.message, int(call.data[-1]) + 1)
+            find_playlist(call.message, page=int(call.data[-1]) + 1)
 
 
 bot.polling(none_stop=True)
