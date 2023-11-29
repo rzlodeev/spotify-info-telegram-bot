@@ -1,3 +1,5 @@
+import pprint
+import logging
 import telebot
 from telebot import types
 import requests
@@ -7,8 +9,13 @@ bot = telebot.TeleBot('6400261897:AAH7L9uULa2JbJso6Yko9Np8h-3CzL0rPF8')
 CLIENT_ID = 'cf83cb4e4759403ebec9c318d9bcea3b'
 CLIENT_SECRET = '32f81a3ce13641a6af60cc290ea969ad'
 
+logging.basicConfig(filename='logs.log', encoding='utf-8', level=logging.INFO)
+
 # Global variables to remember user choice
+title = ''
 search_type = ''
+item = ''
+songs_response = {}
 
 
 # Storage for Spotify access token with self update method
@@ -58,22 +65,31 @@ class MessagesList:
         else:
             new_message.prev_msg = self.head
             self.head = new_message
+        print('Current: ', self.head.msg_func)
+        print('Previous: ', self.head.prev_msg.msg_func)
 
-    def send_prev_msg(self):  # Calls function for previous message. Prev variable marks that called function
-        # doesn't need to set its message as current.
+    def send_prev_msg(self):  # Calls function for previous message. Prev variable marks that function
+        # is called not for the first time, and it doesn't need to set its message as current.
         if self.head.prev_msg:
             self.head.prev_msg.msg_func(self.head.prev_msg.msg, prev=True)
             self.head = self.head.prev_msg
+            print('Current: ', self.head.msg_func)
+            print('Previous: ', self.head.prev_msg.msg_func)
 
 
 msgs_list = MessagesList()
 
 
 # Add inline back button to message
-def add_back_button(reply_markup=None):
+def add_back_button(reply_markup=None, no_delete=False, with_input=False):
     if reply_markup is None:
         reply_markup = types.InlineKeyboardMarkup()
-    reply_markup.add(types.InlineKeyboardButton('↩Back', callback_data='back'))
+    if with_input:  # If user sends message on previous step, back button deletes 3 previous messages instead of 1
+        reply_markup.add(types.InlineKeyboardButton('↩Back', callback_data='back_with_input'))
+    elif no_delete:
+        reply_markup.add(types.InlineKeyboardButton('↩Back', callback_data='back_no_delete'))
+    else:
+        reply_markup.add(types.InlineKeyboardButton('↩Back', callback_data='back'))
     return reply_markup
 
 
@@ -83,6 +99,8 @@ def start_command(message, prev=False):
     if not prev:
         global msgs_list
         msgs_list.set_current_msg(message, start_command)
+
+    logging.info(f'Start command by {message.from_user}, {message.date}')
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 
@@ -100,39 +118,49 @@ def find_a_playlist_message_handler(message, prev=False):
 
     spotify_token.get_token()
 
-    reply_markup = add_back_button()
+    reply_markup = add_back_button(with_input=True)
     bot.send_message(message.chat.id, 'Type in name of playlist/album or insert link:', reply_markup=reply_markup)
     bot.register_next_step_handler(message, name_or_link)
 
 
 # Defines if user text is link to playlist, or it's name
 def name_or_link(message, prev=False):
-    if not prev:
-        global msgs_list
-        msgs_list.set_current_msg(message, name_or_link)
 
+    logging.info(f'User {message.from_user} searched for {message.text}')
     if 'spotify.com' in message.text:
         get_playlist_by_link(message)
     else:
+        if not prev:
+            global msgs_list
+            msgs_list.set_current_msg(message, name_or_link)
+
+        global title
         title = message.text
 
         # Create buttons for user to choose type of search
         reply_markup = types.InlineKeyboardMarkup()
         albums_button = types.InlineKeyboardButton('Albums', callback_data='type_album')
         playlists_button = types.InlineKeyboardButton('Playlists', callback_data='type_playlist')
-        both_button = types.InlineKeyboardButton('Both', callback_data='type_both')
+        both_button = types.InlineKeyboardButton('Both', callback_data='type_album,playlist')
         reply_markup.row(albums_button, playlists_button)
         reply_markup.row(both_button)
-        reply_markup = add_back_button(reply_markup)
+        reply_markup = add_back_button(reply_markup, with_input=True)
 
-        bot.send_message(message.chat.id, f'Title: {title}\n'
-                                          f'Should it be album or playlist?',
-                         reply_to_message_id=message.message_id, reply_markup=reply_markup)
+        if prev:
+            bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id+1,
+                                  text=f'Title: {title}\nShould it be album or playlist?',
+                                  reply_markup=reply_markup)
+        else:
+            bot.send_message(message.chat.id, f'Title: {title}\n'
+                                              f'Should it be album or playlist?',
+                             reply_to_message_id=message.message_id, reply_markup=reply_markup)
 
 
 def get_playlist_by_link(message):
     playlist_link: str = message.text
     playlist_type = str(playlist_link.rsplit('/', 2)[1])  # Executes type from user input (album or playlist)
+    global search_type
+    search_type = playlist_type
     playlist_id = str(playlist_link.rsplit('/', 1)[1].split('?')[0])  # Executes ID part from user input
 
     response = requests.get(url=f'https://api.spotify.com/v1/{playlist_type}s/{playlist_id}',
@@ -140,8 +168,9 @@ def get_playlist_by_link(message):
                                                       f"{spotify_token.access_token}"}).json()
     response_status = get_response_status(response)
     if response_status == 'Success':
-        bot.send_message(message.chat.id,
-                         f'Playlist title: {response["name"]}')
+        global songs_response
+        songs_response = response
+        send_specific_info(message, from_link=True)
     else:
         bot.send_message(message.chat.id, str(response_status))
 
@@ -151,9 +180,10 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
     if not prev:
         global msgs_list
         msgs_list.set_current_msg(message, find_playlist)
+    global search_type
     print(search_type)
 
-    title = message.reply_to_message.text
+    global title
 
     # Modify search_type variable to pass it into request
     if request_search_type == 'both':
@@ -167,14 +197,32 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
                             headers={"Authorization": f"{spotify_token.token_type} {spotify_token.access_token}"},
                             params={
                                 "q": f"{title}",
-                                "type": f"{request_search_type}",
+                                "type": f"{search_type}",
                                 "limit": f"{search_limit}",
                                 "offset": search_limit * page
                             }).json()
     response_status = get_response_status(response)
-    print(response)
 
     if response_status == 'Success':
+        # Make prev/next page buttons markup
+        inline_markup = types.InlineKeyboardMarkup(row_width=5)
+        prev_button = types.InlineKeyboardButton('◀️Prev page', callback_data=f'prev_page_{page}')
+        next_button = types.InlineKeyboardButton('Next page▶️', callback_data=f'next_page_{page}')
+        inline_markup.add(types.InlineKeyboardButton(f'Page: {page + 1}', callback_data='current_page'))
+
+        if response[list(response)[0]]['previous'] is not None:  # Adding next\prev buttons
+            if response[list(response)[0]]['next'] is not None:  # according to their existence
+                inline_markup.add(prev_button, next_button)
+            else:
+                inline_markup.add(prev_button)
+        else:
+            inline_markup.add(next_button)
+
+        inline_markup = add_back_button(inline_markup, no_delete=True)
+
+        user_choice_buttons = {}  # Dict with inline keyboard buttons, for integrating them in further results loop
+        # in structure "item number": "type_id" (for callback data)
+
         # Organizing and filtering response in dict variables above according to search type.
         # Dict structure: {"result_index": {
         #                      "key": "value",
@@ -182,9 +230,9 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
         #                  },
         #                  ...}
         text = f'Results for {title}:\n\n'
-        print(request_search_type)
+        print(search_type)
 
-        if request_search_type == 'album' or request_search_type == 'album,playlist':
+        if search_type == 'album' or search_type == 'album,playlist':
             albums = {}
 
             for idx, album in enumerate(response['albums']['items'], start=1):
@@ -200,9 +248,11 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
             text += 'Albums:\n'
 
             for key, value in albums.items():
-                text += f'{number_emojis.get(f"{key}")}: '  # Adds emoji number from index (key)
+                item_symbol = f'A{number_emojis.get(f"{key}")}'  # Adds emoji number from index
+                text += f'{item_symbol}: '
                 # Adds name of album (with hyperlink), artist and year
                 text += f'<a href=\"{value["link"]}\">{value["name"]}</a> by {value["artist"]}, {value["year"]}\n'
+                user_choice_buttons.update({f'{item_symbol}': f'album_{value["id"]}'})
             text += '\n'
 
         if request_search_type == 'playlist' or request_search_type == 'album,playlist':
@@ -222,31 +272,26 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
             text += 'Playlists:\n'
 
             for key, value in playlists.items():  # Same as in album loop, but for playlists
-                text += f'{number_emojis.get(f"{key}")}: '
+                item_symbol = f'P{number_emojis.get(f"{key}")}'
+                text += f'{item_symbol}: '
                 text += f'<a href=\"{value["link"]}\">{value["name"]}</a> by {value["owner"]}, ' \
                         f'{value["tracks_total"]} songs\n'
+                user_choice_buttons.update({f'{item_symbol}': f'playlist_{value["id"]}'})
 
-        # Make prev/next page buttons markup
-        reply_markup = types.InlineKeyboardMarkup(row_width=2)
-        prev_button = types.InlineKeyboardButton('◀️Prev page', callback_data=f'prev_page_{page}')
-        next_button = types.InlineKeyboardButton('Next page▶️', callback_data=f'next_page_{page}')
-        reply_markup.add(types.InlineKeyboardButton(f'Page: {page + 1}', callback_data='current_page'))
-
-        if response[list(response)[0]]['previous'] is not None:  # Adding next\prev buttons
-            if response[list(response)[0]]['next'] is not None:  # according to their existence
-                reply_markup.add(prev_button, next_button)
-            else:
-                reply_markup.add(prev_button)
-        else:
-            reply_markup.add(next_button)
-        reply_markup = add_back_button(reply_markup)
+        pprint.pprint(user_choice_buttons)
+        # Adding user choice buttons
+        buttons_list = []
+        for name, cb_data in user_choice_buttons.items():
+            buttons_list.append(types.InlineKeyboardButton(f'{name}', callback_data=f'{cb_data}'))
+        inline_markup.add(*buttons_list, row_width=5)
 
         # Breaks text up in several parts if it's longer than 4096 letters
         # Edit message command template with different txt to send
         def edit_long_message_text(txt):
             return bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id,
                                          text=f'{txt}', parse_mode='HTML',
-                                         disable_web_page_preview=True, reply_markup=reply_markup)
+                                         disable_web_page_preview=True, reply_markup=inline_markup)
+
         if len(text) > 4096:
             edit_long_message_text(text[:4096])
             for x in range(4096, len(text), 4096):
@@ -263,6 +308,74 @@ def get_response_status(response):
         return 'Success'
     else:
         return f'Connection error {response["error"]["status"]}: 'f'{response["error"]["message"]}'
+
+
+def get_item_by_id(message):  # Executes when user press button with item choice.
+    global item
+    item_type = str(str(item).split('_')[0])  # Get item type
+    item_id = str(str(item).split('_')[1])  # Get item id
+
+    # Send response to get list of songs in item
+    response = requests.get(url=f'https://api.spotify.com/v1/{item_type}s/{item_id}',
+                            headers={"Authorization": f"{spotify_token.token_type} "
+                                                      f"{spotify_token.access_token}"}).json()
+    response_status = get_response_status(response)
+    if response_status == 'Success':
+        global songs_response
+        songs_response = response
+        send_specific_info(message)
+    else:
+        bot.send_message(message.chat.id, str(response_status))
+
+
+def send_specific_info(message, from_link=False, prev=False):  # Sends specific info about item in message
+    if not prev:
+        global msgs_list
+        msgs_list.set_current_msg(message, send_specific_info)
+
+    if from_link:  # If user got here from pasting link, not from search menu
+        inline_markup = add_back_button(with_input=True)
+    else:
+        inline_markup = add_back_button(no_delete=True)
+
+    global songs_response
+
+    # Response to get additional info
+    ids = ''
+    for song in songs_response["tracks"]["items"]:
+        ids += f'{song["id"]},'
+    additional_songs_response = requests.get(url='https://api.spotify.com/v1/audio-features',
+                                             headers={"Authorization": f"{spotify_token.token_type} "
+                                                                       f"{spotify_token.access_token}"},
+                                             params={'ids': f'{ids}'}).json()
+
+    text = f'{songs_response["type"]} {songs_response["name"]}:\n'
+
+    # Storage for item songs and their info
+    songs = {}
+
+    # Iterating through item to get songs id and name
+    for idx, song in enumerate(songs_response["tracks"]["items"], start=1):
+        songs.update({f'{idx}': {
+            "id": song["id"],
+            "name": song["name"]
+        }})
+
+    # Iterating through additional info response and updating songs dict
+    for idx, song in enumerate(additional_songs_response['audio_features'], start=1):
+        songs[str(idx)].update({
+            "duration": f'{song["duration_ms"]}',
+            "tempo": f'{song["tempo"]}'
+        })
+
+    for idx, song in songs.items():  # Add line for each song
+        text += f'{idx}: {song["name"]}, {song["tempo"]} BPM\n'
+
+    if from_link:
+        bot.send_message(chat_id=message.chat.id, text=text, reply_markup=inline_markup)
+    else:
+        bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id,
+                              text=text, reply_markup=inline_markup)
 
 
 # Handler of inline keyboard buttons
@@ -284,9 +397,21 @@ def callback_query(call):
         if call.data.startswith('next'):
             find_playlist(call.message, request_search_type=search_type, page=int(call.data[-1]) + 1, prev=True)
 
-    if call.data == 'back':
+    # Triggers when user makes choice of item. Callback structure: type_id (album_f3gsb4, playlist_bvw4bv2, etc.)
+    if call.data.startswith('album') or call.data.startswith('playlist'):
+        global item
+        item = call.data
+
+        get_item_by_id(call.message)
+
+    # Triggers when user presses back button
+    if call.data.startswith('back'):
         bot.clear_step_handler(call.message)
-        bot.delete_message(call.message.chat.id, call.message.id)
+        if call.data != 'back_no_delete':
+            bot.delete_message(call.message.chat.id, call.message.id)
+        if call.data == 'back_with_input':
+            bot.delete_message(call.message.chat.id, call.message.id - 1)
+            bot.delete_message(call.message.chat.id, call.message.id - 2)
         global msgs_list
         msgs_list.send_prev_msg()
 
