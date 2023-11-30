@@ -9,7 +9,7 @@ bot = telebot.TeleBot('6400261897:AAH7L9uULa2JbJso6Yko9Np8h-3CzL0rPF8')
 CLIENT_ID = 'cf83cb4e4759403ebec9c318d9bcea3b'
 CLIENT_SECRET = '32f81a3ce13641a6af60cc290ea969ad'
 
-logging.basicConfig(filename='logs.log', encoding='utf-8', level=logging.INFO)
+logging.basicConfig(filename='../logs/logs.log', encoding='utf-8', level=logging.INFO)
 
 # Global variables to remember user choice
 title = ''
@@ -65,16 +65,12 @@ class MessagesList:
         else:
             new_message.prev_msg = self.head
             self.head = new_message
-        print('Current: ', self.head.msg_func)
-        print('Previous: ', self.head.prev_msg.msg_func)
 
     def send_prev_msg(self):  # Calls function for previous message. Prev variable marks that function
         # is called not for the first time, and it doesn't need to set its message as current.
         if self.head.prev_msg:
             self.head.prev_msg.msg_func(self.head.prev_msg.msg, prev=True)
             self.head = self.head.prev_msg
-            print('Current: ', self.head.msg_func)
-            print('Previous: ', self.head.prev_msg.msg_func)
 
 
 msgs_list = MessagesList()
@@ -118,7 +114,10 @@ def find_a_playlist_message_handler(message, prev=False):
 
     spotify_token.get_token()
 
-    reply_markup = add_back_button(with_input=True)
+    if prev:
+        reply_markup = add_back_button()
+    else:
+        reply_markup = add_back_button(with_input=True)
     bot.send_message(message.chat.id, 'Type in name of playlist/album or insert link:', reply_markup=reply_markup)
     bot.register_next_step_handler(message, name_or_link)
 
@@ -229,6 +228,7 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
         #                      ...
         #                  },
         #                  ...}
+
         text = f'Results for {title}:\n\n'
         print(search_type)
 
@@ -339,28 +339,38 @@ def send_specific_info(message, from_link=False, prev=False):  # Sends specific 
         inline_markup = add_back_button(no_delete=True)
 
     global songs_response
-
     # Response to get additional info
     ids = ''
-    for song in songs_response["tracks"]["items"]:
-        ids += f'{song["id"]},'
+    if search_type == 'album':
+        for song in songs_response["tracks"]["items"]:
+            ids += f'{song["id"]},'
+    elif search_type == 'playlist':
+        for song in songs_response["tracks"]["items"]:
+            ids += f'{song["track"]["id"]},'
     additional_songs_response = requests.get(url='https://api.spotify.com/v1/audio-features',
                                              headers={"Authorization": f"{spotify_token.token_type} "
                                                                        f"{spotify_token.access_token}"},
                                              params={'ids': f'{ids}'}).json()
 
-    text = f'{songs_response["type"]} {songs_response["name"]}:\n'
+    text = f'{songs_response["type"]} {songs_response["name"]}:\n' \
+           f'(Press on number to open track on spotify)\n'
 
     # Storage for item songs and their info
     songs = {}
 
     # Iterating through item to get songs id and name
-    for idx, song in enumerate(songs_response["tracks"]["items"], start=1):
-        songs.update({f'{idx}': {
-            "id": song["id"],
-            "name": song["name"]
-        }})
-
+    if search_type == 'album':
+        for idx, song in enumerate(songs_response["tracks"]["items"], start=1):
+            songs.update({f'{idx}': {
+                "id": song["id"],
+                "name": song["name"]
+            }})
+    elif search_type == 'playlist':
+        for idx, song in enumerate(songs_response["tracks"]["items"], start=1):
+            songs.update({f'{idx}': {
+                "id": song["track"]["id"],
+                "name": song["track"]["name"]
+            }})
     # Iterating through additional info response and updating songs dict
     for idx, song in enumerate(additional_songs_response['audio_features'], start=1):
         songs[str(idx)].update({
@@ -416,4 +426,4 @@ def callback_query(call):
         msgs_list.send_prev_msg()
 
 
-bot.polling(none_stop=True)
+bot.infinity_polling(timeout=10, long_polling_timeout=5)

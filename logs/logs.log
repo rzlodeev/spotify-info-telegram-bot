@@ -310,3 +310,500 @@ telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsucc
 
 INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701276904
 INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701276904
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for /start
+ERROR:TeleBot:Threaded polling exception: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: message to delete not found
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 413, in callback_query
+    bot.delete_message(call.message.chat.id, call.message.id - 1)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1696, in delete_message
+    return apihelper.delete_message(self.token, chat_id, message_id, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 1383, in delete_message
+    return _make_request(token, method_url, params=payload, method='post')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 162, in _make_request
+    json_result = _check_result(method_name, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 189, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: message to delete not found
+
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345630
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345630
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345664
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345664
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for dcp
+ERROR:TeleBot:Threaded polling exception: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: message to delete not found
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 409, in callback_query
+    bot.delete_message(call.message.chat.id, call.message.id - 1)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1696, in delete_message
+    return apihelper.delete_message(self.token, chat_id, message_id, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 1383, in delete_message
+    return _make_request(token, method_url, params=payload, method='post')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 162, in _make_request
+    json_result = _check_result(method_name, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 189, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: message to delete not found
+
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345753
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345753
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for dcp
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701345852
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for dcp
+ERROR:TeleBot:Threaded polling exception: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: message to delete not found
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 410, in callback_query
+    bot.delete_message(call.message.chat.id, call.message.id - 1)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1696, in delete_message
+    return apihelper.delete_message(self.token, chat_id, message_id, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 1383, in delete_message
+    return _make_request(token, method_url, params=payload, method='post')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 162, in _make_request
+    json_result = _check_result(method_name, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 189, in _check_result
+    raise ApiTelegramException(method_name, result, result_json)
+telebot.apihelper.ApiTelegramException: A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: message to delete not found
+
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346034
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346098
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346098
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for dcp
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346098
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for dcp
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346213
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for dcp
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346536
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for second coming
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for second coming
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346536
+ERROR:TeleBot:Infinity polling exception: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connection.py", line 461, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1378, in getresponse
+    response.begin()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 318, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1311, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1167, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\util\retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\util\util.py", line 39, in reraise
+    raise value
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 538, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 370, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1073, in __threaded_polling
+    polling_thread.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 108, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 649, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 623, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates, long_polling_timeout)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 321, in get_updates
+    return _make_request(token, method_url, params=payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 156, in _make_request
+    result = _get_req_session().request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\adapters.py", line 532, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701346536
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for всз
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for всз
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for techno
+ERROR:TeleBot:Infinity polling exception: 'id'
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 404, in callback_query
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 325, in get_item_by_id
+    songs_response = response
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 345, in send_specific_info
+    for song in songs_response["tracks"]["items"]:
+                  ^^^^^^^^^^
+KeyError: 'id'
+
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701347226
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for techno
+ERROR:TeleBot:Infinity polling exception: 'id'
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 405, in callback_query
+    get_item_by_id(call.message)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 326, in get_item_by_id
+    send_specific_info(message)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 346, in send_specific_info
+    ids += f'{song["id"]},'
+              ~~~~^^^^^^
+KeyError: 'id'
+
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701347554
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for techno
+ERROR:TeleBot:Infinity polling exception: list indices must be integers or slices, not str
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 408, in callback_query
+    get_item_by_id(call.message)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 326, in get_item_by_id
+    send_specific_info(message)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 348, in send_specific_info
+    for song in songs_response["tracks"]["items"]["track"]:
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: list indices must be integers or slices, not str
+
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701347610
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for techno
+ERROR:TeleBot:Infinity polling exception: 'id'
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 6801, in _run_middlewares_and_handler
+    result = handler['function'](message)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 408, in callback_query
+    get_item_by_id(call.message)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 326, in get_item_by_id
+    send_specific_info(message)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\src\app.py", line 363, in send_specific_info
+    "id": song["id"],
+          ~~~~^^^^^^
+KeyError: 'id'
+
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
+INFO:root:Start command by {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None}, 1701347717
+INFO:root:User {'id': 320496591, 'is_bot': False, 'first_name': 'непередаване', 'username': 'neperedavane', 'last_name': None, 'language_code': 'uk', 'can_join_groups': None, 'can_read_all_group_messages': None, 'supports_inline_queries': None, 'is_premium': None, 'added_to_attachment_menu': None} searched for techno
+ERROR:TeleBot:Infinity polling exception: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connection.py", line 461, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1378, in getresponse
+    response.begin()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 318, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1311, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1167, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\util\retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\util\util.py", line 39, in reraise
+    raise value
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 538, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 370, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1073, in __threaded_polling
+    polling_thread.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 108, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 649, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 623, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates, long_polling_timeout)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 321, in get_updates
+    return _make_request(token, method_url, params=payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 156, in _make_request
+    result = _get_req_session().request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\adapters.py", line 532, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+
+ERROR:TeleBot:Infinity polling exception: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connection.py", line 461, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 1378, in getresponse
+    response.begin()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 318, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\http\client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1311, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1167, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\util\retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\util\util.py", line 39, in reraise
+    raise value
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 538, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\urllib3\connectionpool.py", line 370, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 1073, in __threaded_polling
+    polling_thread.raise_exceptions()
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 108, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\util.py", line 90, in run
+    task(*args, **kwargs)
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 649, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\__init__.py", line 623, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates, long_polling_timeout)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 321, in get_updates
+    return _make_request(token, method_url, params=payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\telebot\apihelper.py", line 156, in _make_request
+    result = _get_req_session().request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cockroach\Documents\1PROJECTS\py\spotify_info_bot\venv\Lib\site-packages\requests\adapters.py", line 532, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=10)
+
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
