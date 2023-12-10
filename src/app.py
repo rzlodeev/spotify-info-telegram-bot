@@ -113,10 +113,18 @@ def start_command(message, prev=False):
     bot.send_message(message.chat.id, 'Select action from menu below⬇️', reply_markup=markup)
 
 
-@bot.message_handler(commands=['/logs'])
+@bot.message_handler(commands=['logs'])
 def logs_command(message):
-    log_file = open('../logs/logs.log', 'rb')
-    bot.send_document(message.chat.id, document=log_file)
+    bot.send_message(message.chat.id, 'pswd:')
+    bot.register_next_step_handler(message, send_logs)
+
+
+def send_logs(message):
+    if message.text == f'{LOGS_PWD}':
+        log_file = open('../logs/logs.log', 'rb')
+        bot.send_document(message.chat.id, document=log_file)
+    else:
+        bot.send_message(message.chat.id, 'wrong pswd')
 
 
 @bot.message_handler(regexp='🔍Find a playlist/album')
