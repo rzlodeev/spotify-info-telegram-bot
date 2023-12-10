@@ -1,2 +1,3 @@
 venv/
-logs/logs.log
+logs/
+.env

@@ -807,3 +807,5 @@ requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='api.telegram.org', po
 
 ERROR:TeleBot:Infinity polling: polling exited
 ERROR:TeleBot:Break infinity polling
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
