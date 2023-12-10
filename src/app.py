@@ -3,11 +3,17 @@ import logging
 import telebot
 from telebot import types
 import requests
+import os
+from dotenv import load_dotenv
 from emojis import number_emojis
 
-bot = telebot.TeleBot('6400261897:AAH7L9uULa2JbJso6Yko9Np8h-3CzL0rPF8')
-CLIENT_ID = 'cf83cb4e4759403ebec9c318d9bcea3b'
-CLIENT_SECRET = '32f81a3ce13641a6af60cc290ea969ad'
+load_dotenv()
+
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+bot = telebot.TeleBot(f'{BOT_TOKEN}')
+
 
 logging.basicConfig(filename='../logs/logs.log', encoding='utf-8', level=logging.INFO)
 
