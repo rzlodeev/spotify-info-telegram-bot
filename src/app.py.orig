@@ -7,7 +7,6 @@ import os
 from dotenv import load_dotenv
 from emojis import number_emojis
 
-<<<<<<< HEAD
 load_dotenv()
 
 CLIENT_ID = os.getenv('CLIENT_ID')
@@ -15,11 +14,7 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 bot = telebot.TeleBot(f'{BOT_TOKEN}')
 
-=======
-bot = telebot.TeleBot('')  # Insert Telegram bot token in string
-CLIENT_ID = ''  # Insert Spotify API token in strings
-CLIENT_SECRET = ''
->>>>>>> baf1c47cb9668046656900b44c027dffba73317f
+LOGS_PWD = os.getenv('LOGS_PWD')  # Custom password for checking logs from bot
 
 logging.basicConfig(filename='../logs/logs.log', encoding='utf-8', level=logging.INFO)
 
@@ -116,6 +111,27 @@ def start_command(message, prev=False):
     markup.row(search_button)
 
     bot.send_message(message.chat.id, 'Select action from menu below⬇️', reply_markup=markup)
+
+
+<<<<<<< HEAD
+@bot.message_handler(commands=['logs'])
+def logs_command(message):
+    bot.send_message(message.chat.id, 'pswd:')
+    bot.register_next_step_handler(message, send_logs)
+
+
+def send_logs(message):
+    if message.text == f'{LOGS_PWD}':
+        log_file = open('../logs/logs.log', 'rb')
+        bot.send_document(message.chat.id, document=log_file)
+    else:
+        bot.send_message(message.chat.id, 'wrong pswd')
+=======
+@bot.message_handler(commands=['/logs'])
+def logs_command(message):
+    log_file = open('../logs/logs.log', 'rb')
+    bot.send_document(message.chat.id, document=log_file)
+>>>>>>> 9b81b04588fd1dc7520f442aa3dabbb313b03593
 
 
 @bot.message_handler(regexp='🔍Find a playlist/album')
@@ -438,4 +454,5 @@ def callback_query(call):
         msgs_list.send_prev_msg()
 
 
+print('Bot polling...')
 bot.infinity_polling(timeout=10, long_polling_timeout=5)

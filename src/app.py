@@ -23,6 +23,9 @@ title = ''
 search_type = ''
 item = ''
 songs_response = {}
+min_bpm = 0
+max_bpm = 0
+bpm_sorting = 'default'
 
 
 # Storage for Spotify access token with self update method
@@ -145,7 +148,6 @@ def find_a_playlist_message_handler(message, prev=False):
 
 # Defines if user text is link to playlist, or it's name
 def name_or_link(message, prev=False):
-
     logging.info(f'User {message.from_user} searched for {message.text}')
     if 'spotify.com' in message.text:
         get_playlist_by_link(message)
@@ -167,7 +169,7 @@ def name_or_link(message, prev=False):
         reply_markup = add_back_button(reply_markup, with_input=True)
 
         if prev:
-            bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id+1,
+            bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id + 1,
                                   text=f'Title: {title}\nShould it be album or playlist?',
                                   reply_markup=reply_markup)
         else:
@@ -201,7 +203,6 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
         global msgs_list
         msgs_list.set_current_msg(message, find_playlist)
     global search_type
-    print(search_type)
 
     global title
 
@@ -251,7 +252,6 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
         #                  ...}
 
         text = f'Results for {title}:\n\n'
-        print(search_type)
 
         if search_type == 'album' or search_type == 'album,playlist':
             albums = {}
@@ -299,26 +299,15 @@ def find_playlist(message, request_search_type=search_type, page=0, prev=False):
                         f'{value["tracks_total"]} songs\n'
                 user_choice_buttons.update({f'{item_symbol}': f'playlist_{value["id"]}'})
 
-        pprint.pprint(user_choice_buttons)
         # Adding user choice buttons
         buttons_list = []
         for name, cb_data in user_choice_buttons.items():
             buttons_list.append(types.InlineKeyboardButton(f'{name}', callback_data=f'{cb_data}'))
         inline_markup.add(*buttons_list, row_width=5)
 
-        # Breaks text up in several parts if it's longer than 4096 letters
-        # Edit message command template with different txt to send
-        def edit_long_message_text(txt):
-            return bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id,
-                                         text=f'{txt}', parse_mode='HTML',
-                                         disable_web_page_preview=True, reply_markup=inline_markup)
-
-        if len(text) > 4096:
-            edit_long_message_text(text[:4096])
-            for x in range(4096, len(text), 4096):
-                edit_long_message_text(text[x:x + 4096])
-        else:
-            edit_long_message_text(text)
+        bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id,
+                              text=f'{text}', parse_mode='HTML',
+                              disable_web_page_preview=True, reply_markup=inline_markup)
     else:
         bot.send_message(message.chat.id, f'{response_status}')
 
@@ -343,13 +332,18 @@ def get_item_by_id(message):  # Executes when user press button with item choice
     response_status = get_response_status(response)
     if response_status == 'Success':
         global songs_response
+        global search_type
         songs_response = response
+        search_type = item_type
         send_specific_info(message)
     else:
         bot.send_message(message.chat.id, str(response_status))
 
 
-def send_specific_info(message, from_link=False, prev=False):  # Sends specific info about item in message
+def send_specific_info(
+        message, from_link=False, prev=False, sorting=bpm_sorting, page=0
+):  # Sends specific info about item in message
+
     if not prev:
         global msgs_list
         msgs_list.set_current_msg(message, send_specific_info)
@@ -359,7 +353,12 @@ def send_specific_info(message, from_link=False, prev=False):  # Sends specific 
     else:
         inline_markup = add_back_button(no_delete=True)
 
+    sort_by_bpm_asc_button = types.InlineKeyboardButton('Sort by BPM ↓', callback_data="sort_bpm_asc")
+    sort_by_bpm_desc_button = types.InlineKeyboardButton('Sort by BPM ↑', callback_data="sort_bpm_desc")
+    inline_markup.add(sort_by_bpm_asc_button, sort_by_bpm_desc_button)
+
     global songs_response
+    global search_type
     # Response to get additional info
     ids = ''
     if search_type == 'album':
@@ -384,14 +383,20 @@ def send_specific_info(message, from_link=False, prev=False):  # Sends specific 
         for idx, song in enumerate(songs_response["tracks"]["items"], start=1):
             songs.update({f'{idx}': {
                 "id": song["id"],
-                "name": song["name"]
+                "name": song["name"],
+                "link": song["external_urls"]["spotify"]
             }})
+            if len(song["external_urls"]) > 1:
+                print(song["external_urls"])
     elif search_type == 'playlist':
         for idx, song in enumerate(songs_response["tracks"]["items"], start=1):
             songs.update({f'{idx}': {
                 "id": song["track"]["id"],
-                "name": song["track"]["name"]
+                "name": song["track"]["name"],
+                "link": song["track"]["external_urls"]["spotify"]
             }})
+            if len(song["external_urls"]) > 1:
+                print(song["external_urls"])
     # Iterating through additional info response and updating songs dict
     for idx, song in enumerate(additional_songs_response['audio_features'], start=1):
         songs[str(idx)].update({
@@ -399,14 +404,44 @@ def send_specific_info(message, from_link=False, prev=False):  # Sends specific 
             "tempo": f'{song["tempo"]}'
         })
 
+    if sorting != 'default':
+        songs = {k: songs[k] for k in sorted(songs, key=lambda itm_idx: int(songs[itm_idx]['tempo']),
+                                             reverse=True if sorting == 'desc' else False)}
+
+    print('Sorting: ' + str(sorting))
+
+    songs_on_page = 20
+    low_item_in_list_idx = page * songs_on_page
+    high_item_in_list_idx = (page + 1) * songs_on_page
+    pages_total = len(songs.items()) / songs_on_page + 1
+
     for idx, song in songs.items():  # Add line for each song
-        text += f'{idx}: {song["name"]}, {song["tempo"]} BPM\n'
+        if low_item_in_list_idx < int(idx) < high_item_in_list_idx:
+            text += f'<a href="{song["link"]}">{idx}</a>: {song["name"]}, {song["tempo"]} BPM\n'
+
+    prev_page_button = types.InlineKeyboardButton('Prev page', callback_data=f"songs_prev_{page}")
+    next_page_button = types.InlineKeyboardButton('Next page', callback_data=f"songs_next_{page}")
+    if page:  # If page is not first
+        if page != pages_total:  # If page is not last
+            inline_markup.add(prev_page_button, next_page_button)
+        else:
+            inline_markup.add(prev_page_button)
+    else:
+        inline_markup.add(next_page_button)
 
     if from_link:
-        bot.send_message(chat_id=message.chat.id, text=text, reply_markup=inline_markup)
+        bot.send_message(chat_id=message.chat.id, text=text, reply_markup=inline_markup, parse_mode='HTML')
     else:
         bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id,
-                              text=text, reply_markup=inline_markup)
+                              text=text, reply_markup=inline_markup, parse_mode='HTML')
+
+    # Split message if it is longer than 4096 letters
+    # if len(text) > 4096:
+    #     edit_long_message_text(text[:4096])
+    #     for x in range(4096, len(text), 4096):
+    #         edit_long_message_text(text[x:x + 4096])
+    # else:
+    #     edit_long_message_text(text)
 
 
 # Handler of inline keyboard buttons
@@ -419,7 +454,7 @@ def callback_query(call):
         search_type = str(call.data).replace('type_', '')
         find_playlist(call.message, request_search_type=search_type)
 
-    # Triggers when user changes page
+    # Triggers when user changes page in album search
     if 'page' in call.data:
         # Previous page in search results
         if call.data.startswith('prev'):
@@ -445,6 +480,21 @@ def callback_query(call):
             bot.delete_message(call.message.chat.id, call.message.id - 2)
         global msgs_list
         msgs_list.send_prev_msg()
+
+    global bpm_sorting
+    # Triggers when user press "sort" button
+    if call.data == 'sort_bpm_asc':
+        bpm_sorting = 'asc'
+        send_specific_info(call.message, prev=True)
+    if call.data == 'sort_bpm_asc':
+        bpm_sorting = 'desc'
+        send_specific_info(call.message, prev=True)
+
+    # Triggers when user changes pages on result songs page
+    if 'songs_prev' in call.data:
+        send_specific_info(call.message, prev=True, page=int(call.data[-1]) - 1)
+    if 'songs_next' in call.data:
+        send_specific_info(call.message, prev=True, page=int(call.data[-1]) + 1)
 
 
 print('Bot polling...')
