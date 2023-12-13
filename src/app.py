@@ -395,7 +395,7 @@ def send_specific_info(
                 "name": song["track"]["name"],
                 "link": song["track"]["external_urls"]["spotify"]
             }})
-            if len(song["external_urls"]) > 1:
+            if len(song["tracks"]["external_urls"]) > 1:
                 print(song["external_urls"])
     # Iterating through additional info response and updating songs dict
     for idx, song in enumerate(additional_songs_response['audio_features'], start=1):
